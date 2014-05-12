@@ -6,6 +6,16 @@ $(function() {
 		draw(data.x, data.y);
 	});
 	
+	socket.on('text', function(data){
+		if(data.text != '') {
+			text(data.text);
+		}
+	});
+	
+	socket.on('clear', function(data){
+		clear();
+	});
+	
 	var canvas = $('canvas#canvas').get(0);
 	canvas.width = window.innerWidth - 30;
 	canvas.height = window.innerHeight - 30;
@@ -43,9 +53,24 @@ $(function() {
 	
 	function draw(idxX, idxY){
 		// 丸を描く
+		ctx.fillStyle = 'black';
 		ctx.beginPath();
 		ctx.arc(idxX, idxY, 5, 0, Math.PI * 2, false);
 		ctx.fill();
+	}
+	
+	function text(text){
+		// 文字を書く
+		ctx.fillStyle = "gray";
+		ctx.font = "500px 'ＭＳ ゴシック'";
+		ctx.textAlign = "left";
+		ctx.textBaseline = "top";
+		ctx.fillText(text, 10, 75, 1500);
+	}
+	
+	function clear(){
+		// Clear
+		ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 	}
 
 });

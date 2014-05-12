@@ -20,3 +20,11 @@ io.sockets.on('connection', function(socket) {
 		io.sockets.emit('draw', {x: data.x, y: data.y});
 	});
 });
+
+app.get('/*', function(req, res) {
+	res.redirect('/');
+	setTimeout(function() {
+		io.sockets.emit('clear');
+		io.sockets.emit('text', {text: req.params[0]});
+	}, 3000);
+});
